@@ -1,4 +1,5 @@
 import pandas as pd
+from pprint import pprint
 
 
 def read_vines_from_xslx(xslx_path: str) -> dict:
@@ -8,12 +9,25 @@ def read_vines_from_xslx(xslx_path: str) -> dict:
                               keep_default_na=False
                               )
 
-    return dataframe.to_dict(orient='records')
+    drinks = dataframe.to_dict(orient='records')
+    drink_categories = {drink['Категория']: [] for drink in drinks}
+
+    for drink in drinks:
+        drink_categories[drink['Категория']].append(
+            {
+                "Картинка": drink["Картинка"],
+                "Категория": drink["Категория"],
+                "Название": drink["Название"],
+                "Сорт": drink["Сорт"],
+                "Цена": drink["Цена"],
+            })
+
+    return drink_categories
 
 
 if __name__ == "__main__":
     vines = read_vines_from_xslx('xls/wine2.xlsx')
-    print(*[vine['Сорт'] for vine in vines], sep='\n')
+    pprint(vines)
 
     split = {'index': [0, 1, 2, 3, 4, 5],
              'columns': ['Название', 'Сорт', 'Цена', 'Картинка'],
