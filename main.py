@@ -2,23 +2,21 @@ from http.server import HTTPServer, SimpleHTTPRequestHandler
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from datetime import datetime
 
-from read_from_xls import read_vines_from_xslx
+from read_from_xls import get_drinks_from_xslx
 
 env = Environment(
     loader=FileSystemLoader('.'),
     autoescape=select_autoescape(['html', 'xml'])
 )
 
-vines = [vine for vine in read_vines_from_xslx('xls/wine2.xlsx') if vine['Сорт']]
-print(vines)
-
 template = env.get_template('template.html')
 
+drinks_by_category = get_drinks_from_xslx('xls/wine3.xlsx')
 year = datetime.now().year - 1920
 
 rendered_page = template.render(
     year=year,
-    vines=vines,
+    drinks=drinks_by_category,
 )
 
 with open('index.html', 'w', encoding="utf8") as file:
