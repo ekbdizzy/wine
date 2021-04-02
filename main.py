@@ -1,6 +1,7 @@
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from datetime import datetime
+import argparse
 
 from read_from_xls import get_drinks_from_xslx
 
@@ -23,8 +24,19 @@ rendered_page = template.render(
     drinks=sorted_by_category_drinks,
 )
 
-with open('index.html', 'w', encoding="utf8") as file:
-    file.write(rendered_page)
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '-f', '--file',
+        help="file to parse",
+        action='store'
+    )
 
-server = HTTPServer(('0.0.0.0', 8000), SimpleHTTPRequestHandler)
-server.serve_forever()
+    args = parser.parse_args()
+    print(args)
+
+    with open('index.html', 'w', encoding="utf8") as file:
+        file.write(rendered_page)
+
+    server = HTTPServer(('0.0.0.0', 8000), SimpleHTTPRequestHandler)
+    server.serve_forever()
