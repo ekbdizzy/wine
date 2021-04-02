@@ -9,16 +9,16 @@ def get_sorted_dict(dict):
 
 
 def get_drinks_from_xslx(xslx_path: str) -> dict:
-    df = pd.read_excel(
+    drinks = pd.read_excel(
         io=xslx_path,
         usecols=["Категория", "Название", "Сорт", "Цена", "Картинка", "Акция"],
         na_values='nan',
         keep_default_na=False)
-    drinks = df.to_dict(orient='records')
+    drinks_dict = drinks.to_dict(orient='records')
 
-    drinks_by_category = defaultdict(list)
-    for drink in drinks:
-        drinks_by_category[drink['Категория']].append(
+    sorted_by_category_drinks = defaultdict(list)
+    for drink in drinks_dict:
+        sorted_by_category_drinks[drink['Категория']].append(
             {
                 "Картинка": drink["Картинка"],
                 "Категория": drink["Категория"],
@@ -28,7 +28,7 @@ def get_drinks_from_xslx(xslx_path: str) -> dict:
                 "Акция": drink["Акция"]
             })
 
-    return get_sorted_dict(drinks_by_category)
+    return get_sorted_dict(sorted_by_category_drinks)
 
 
 if __name__ == "__main__":
