@@ -4,7 +4,7 @@ from datetime import datetime
 
 from read_from_xls import get_drinks_from_xslx
 
-FOUNDATION_YEAR = 1920
+FOUNDATION_YEAR = 1921
 TEMPLATE_NAME = 'template.html'
 XLSX_FILE_PATH = 'xls/wine3.xlsx'
 

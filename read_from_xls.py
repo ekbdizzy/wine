@@ -17,16 +17,10 @@ def get_drinks_from_xslx(xslx_path: str) -> dict:
     drinks_dict = drinks.to_dict(orient='records')
 
     sorted_by_category_drinks = defaultdict(list)
+
     for drink in drinks_dict:
         sorted_by_category_drinks[drink['Категория']].append(
-            {
-                "Картинка": drink["Картинка"],
-                "Категория": drink["Категория"],
-                "Название": drink["Название"],
-                "Сорт": drink["Сорт"],
-                "Цена": drink["Цена"],
-                "Акция": drink["Акция"]
-            })
+            {key: drink[key] for key in drink.keys()})
 
     return get_sorted_dict(sorted_by_category_drinks)
 
