@@ -1,6 +1,10 @@
+import os
+import sys
 import pandas as pd
 from pprint import pprint
 from collections import defaultdict
+
+import settings
 
 
 def get_sorted_dict(dict):
@@ -9,6 +13,9 @@ def get_sorted_dict(dict):
 
 
 def get_drinks_from_xslx(xslx_path: str) -> dict:
+    if not os.path.exists(xslx_path):
+        sys.exit(f'File {xslx_path} does not exists')
+
     drinks = pd.read_excel(
         io=xslx_path,
         usecols=["Категория", "Название", "Сорт", "Цена", "Картинка", "Акция"],
@@ -26,5 +33,5 @@ def get_drinks_from_xslx(xslx_path: str) -> dict:
 
 
 if __name__ == "__main__":
-    vines = get_drinks_from_xslx('xls/wine3.xlsx')
+    vines = get_drinks_from_xslx(settings.XLSX_FILE_PATH)
     pprint(vines, indent=4)
