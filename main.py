@@ -24,7 +24,7 @@ if __name__ == '__main__':
     template = env.get_template(settings.TEMPLATE_NAME)
     sorted_by_category_drinks = get_drinks_from_xslx(args.file)
     company_age = datetime.now().year - settings.FOUNDATION_YEAR
-    rendered_page = template.render(age=company_age, drinks=sorted_by_category_drinks)
+    rendered_page = template.render(age=company_age, drinks=sorted_by_category_drinks.items())
 
     with open('index.html', 'w', encoding="utf8") as file:
         file.write(rendered_page)
