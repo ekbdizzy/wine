@@ -6,19 +6,16 @@ import settings
 
 from read_from_xls import get_drinks_from_xslx
 
-env = Environment(
-    loader=FileSystemLoader('.'),
-    autoescape=select_autoescape(['html', 'xml'])
-)
 
-if __name__ == '__main__':
+def main():
+    env = Environment(loader=FileSystemLoader('.'),
+                      autoescape=select_autoescape(['html', 'xml']))
+
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        '-f', '--file',
-        help="path to xls file with drinks",
-        action='store',
-        default=settings.XLSX_FILE_PATH
-    )
+    parser.add_argument('-f', '--file',
+                        help="path to xls file with drinks",
+                        action='store',
+                        default=settings.XLSX_FILE_PATH)
     args = parser.parse_args()
 
     template = env.get_template(settings.TEMPLATE_NAME)
@@ -31,3 +28,7 @@ if __name__ == '__main__':
 
     server = HTTPServer(('0.0.0.0', 8000), SimpleHTTPRequestHandler)
     server.serve_forever()
+
+
+if __name__ == '__main__':
+    main()
