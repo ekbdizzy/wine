@@ -19,9 +19,9 @@ def main():
     args = parser.parse_args()
 
     template = env.get_template(settings.TEMPLATE_NAME)
-    sorted_by_category_drinks = get_drinks_from_xslx(args.file)
+    drinks_by_category = get_drinks_from_xslx(args.file)
     company_age = datetime.now().year - settings.FOUNDATION_YEAR
-    rendered_page = template.render(age=company_age, drinks=sorted_by_category_drinks.items())
+    rendered_page = template.render(age=company_age, drinks=drinks_by_category.items())
 
     with open('index.html', 'w', encoding="utf8") as file:
         file.write(rendered_page)
